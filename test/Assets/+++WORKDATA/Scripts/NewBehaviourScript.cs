@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class NewBehaviourScript : MonoBehaviour
 {
         
-    //int updateCounter = 0;
+    //Movement
     float movingSpeed;
 
     Rigidbody rb;
@@ -34,18 +34,19 @@ public class NewBehaviourScript : MonoBehaviour
     private float cameraRoll;
     [SerializeField] private float maxCamPitch = 80f;
 
-    private void Start()
+    private void Start() //make sure everything is set right from the start
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        rb.freezeRotation = true; //rotation freeze
 
         movingSpeed = defaultSpeed;
     }
 
     void Update()
     {
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue(); //where is the mouse
 
+        //cam movement related to the mosue movement
         cameraPitch = cameraPitch + mouseDelta.y * rotationSensetivity;
         cameraPitch = Mathf.Clamp(value: cameraPitch, min: -maxCamPitch, maxCamPitch);
 
@@ -59,7 +60,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-       
+       //change movement if slope is too high
         
         if (SlopeCheck())
         {
@@ -69,19 +70,21 @@ public class NewBehaviourScript : MonoBehaviour
 
     void OnJump()
     {
-        Debug.Log("Jump");
+        //if you touch the ground you can jump
         if (GroundCheck())
         {
             rb.velocity = new Vector3(0f, jumpForce, 0f);
         }
     }
 
+    //sneaking
     void OnSneak(InputValue inputValue)
     {
-        Debug.Log("Sneak:" + inputValue.Get<float>());
+      
         float isSneak = inputValue.Get<float>();
 
-        //round float to nearest int that we can compare it to a whole number
+        //if youre not sneaking youre walking normally
+        
         if (Mathf.RoundToInt(isSneak) == 1)
         {
             movingSpeed = sneakSpeed;
@@ -94,17 +97,14 @@ public class NewBehaviourScript : MonoBehaviour
 
     void OnMove(InputValue inputValue)
     {
-        Debug.Log("move" + inputValue.Get<Vector2>());
-
-
         inputVector = inputValue.Get<Vector2>();
-
-
     }
 
+
+    //basically the same as sneak
     void OnSprint(InputValue inputValue)
     {
-        Debug.Log("Sprint:" + inputValue.Get<float>());
+        
         float isSprint = inputValue.Get<float>();
 
         //round float to nearest int that we can compare it to a whole number
@@ -118,11 +118,14 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
+    //are you touching the ground? 
     bool GroundCheck()
     {
         return Physics.Raycast(transformRayStart.position, Vector3.down, rayLength, layerGroundCheck);
     }
 
+
+    //basically if you see the ground as a mirror, is the raycast sloped or not?
     bool SlopeCheck()
     {
         RaycastHit hit;
@@ -140,7 +143,7 @@ public class NewBehaviourScript : MonoBehaviour
         return true;
     }
 
-    //WINNING
+    //WINNING / Dying
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("WinZone"))
