@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/+++WORKDATA/Scenes/MainMenu.unity
     guid: 204d45f0c5b70b448a3021152f7cdc6f
   - enabled: 1
-    path: Assets/+++WORKDATA/Scenes/SampleScene 1.unity
+    path: Assets/+++WORKDATA/Scenes/Level1.unity
     guid: 854b172fd9258cb43be803200e840e6a
   - enabled: 1
     path: Assets/+++WORKDATA/Scenes/Levels.unity
@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/+++WORKDATA/Scenes/GameOver.unity
     guid: b4ed362f4a5ccc14ba7714ece35fab36
+  - enabled: 1
+    path: Assets/+++WORKDATA/Scenes/Winning.unity
+    guid: d12ff644cc330d243b0e5033ed7adc81
   m_configObjects: {}

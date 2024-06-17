@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -138,5 +139,21 @@ public class NewBehaviourScript : MonoBehaviour
         }
         return true;
     }
+
+    //WINNING
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("WinZone"))
+        {
+            SceneManager.LoadScene("Winning");
+        }
+
+        if (other.CompareTag("Enemy"))
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+    }
+
+   
 
 }
