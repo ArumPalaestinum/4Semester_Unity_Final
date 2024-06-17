@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEditor;
 
 //has access to the field of view script?
-[CustomEditor(typeof(FieldOfView))]
+[CustomEditor(typeof(EnemyManager))]
 public class FieldOfViewEditor : Editor
 {
     //method that work as ui
     private void OnSceneGUI()
     {
         //ref for fieldofview
-        FieldOfView fov = (FieldOfView)target;
+        EnemyManager fov = (EnemyManager)target;
 
         //color
         Handles.color = Color.white;

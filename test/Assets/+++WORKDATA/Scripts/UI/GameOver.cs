@@ -7,7 +7,7 @@ public class GameOver : MonoBehaviour
 {
     public void Levels()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2); //cheated a bit and just let the player choose the level they want to play again
+        SceneManager.LoadScene("Levels"); //cheated a bit and just let the player choose the level they want to play again
 
     }
 
