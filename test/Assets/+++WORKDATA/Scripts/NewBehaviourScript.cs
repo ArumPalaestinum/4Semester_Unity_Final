@@ -7,10 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-
-    //Movement
+    // Movement
     float movingSpeed;
-
     Rigidbody rb;
     Vector2 inputVector;
     [SerializeField] float defaultSpeed = 5f;
@@ -18,73 +16,89 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] float sneakSpeed = 1.5f;
     [SerializeField] float jumpForce = 5f;
 
-    //groundcheck
+    // Ground check
     [SerializeField] private Transform transformRayStart;
     [SerializeField] private float rayLength = 0.5f;
     [SerializeField] private LayerMask layerGroundCheck;
 
-    //slopcheck
+    // Slope check
     [SerializeField] float maxAngleSlope = 30f;
 
-
-    //cam
+    // Camera
     [SerializeField] Transform transformCameraFollow;
     [SerializeField] float rotationSensetivity = 1f;
     private float cameraPitch;
     private float cameraRoll;
     [SerializeField] private float maxCamPitch = 80f;
 
-    private void Start() //make sure everything is set right from the start
+    private void Start() // Make sure everything is set right from the start
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; //rotation freeze
+        rb.freezeRotation = true; // Rotation freeze
 
         movingSpeed = defaultSpeed;
     }
 
     void Update()
     {
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue(); //where is the mouse
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue(); // Where is the mouse
 
-        //cam movement related to the mosue movement
+        // Camera movement related to the mouse movement
         cameraPitch = cameraPitch + mouseDelta.y * rotationSensetivity;
-        cameraPitch = Mathf.Clamp(value: cameraPitch, min: -maxCamPitch, maxCamPitch);
+        cameraPitch = Mathf.Clamp(cameraPitch, -maxCamPitch, maxCamPitch);
 
         cameraRoll = cameraRoll + mouseDelta.x * rotationSensetivity;
 
         transformCameraFollow.localEulerAngles = new Vector3(cameraPitch, cameraRoll, 0f);
-
-
-
     }
 
+
+    //filled with a bunch movement related things. a nightmare to debug and actually do
     private void FixedUpdate()
     {
-        //change movement if slope is too high
+        // Calculate the camera's forward and right vectors
+        Vector3 cameraForward = transformCameraFollow.forward;
+        Vector3 cameraRight = transformCameraFollow.right;
 
+        // Ensure movement is only in the horizontal plane
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+
+        // Normalize vectors to get correct direction
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        // Calculate the movement direction based on input and camera orientation
+        Vector3 moveDirection = cameraForward * inputVector.y + cameraRight * inputVector.x;
+
+        // Check if the player is on a slope within the acceptable angle
         if (SlopeCheck())
         {
-            rb.velocity = new Vector3(inputVector.x * movingSpeed, rb.velocity.y, inputVector.y * movingSpeed);
+            // Apply movement direction to the player's velocity
+            rb.velocity = new Vector3(moveDirection.x * movingSpeed, rb.velocity.y, moveDirection.z * movingSpeed);
+        }
+        else
+        {
+            // If on a steep slope, only apply vertical velocity (stop movement on steep slopes)
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
         }
     }
 
     void OnJump()
     {
-        //if you touch the ground you can jump
+        // If you touch the ground you can jump
         if (GroundCheck())
         {
-            rb.velocity = new Vector3(0f, jumpForce, 0f);
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z); // Use current horizontal velocity
         }
     }
 
-    //sneaking
+    // Sneaking
     void OnSneak(InputValue inputValue)
     {
-
         float isSneak = inputValue.Get<float>();
 
-        //if youre not sneaking youre walking normally
-
+        // If you're not sneaking you're walking normally
         if (Mathf.RoundToInt(isSneak) == 1)
         {
             movingSpeed = sneakSpeed;
@@ -95,19 +109,18 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
+    // Use new imput system 
     void OnMove(InputValue inputValue)
     {
         inputVector = inputValue.Get<Vector2>();
     }
 
-
-    //basically the same as sneak
+    // Basically the same as sneak
     void OnSprint(InputValue inputValue)
     {
-
         float isSprint = inputValue.Get<float>();
 
-        //round float to nearest int that we can compare it to a whole number
+        // Round float to nearest int that we can compare it to a whole number
         if (Mathf.RoundToInt(isSprint) == 1)
         {
             movingSpeed = sprintSpeed;
@@ -118,18 +131,16 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
-    //are you touching the ground? 
+    // Are you touching the ground? 
     bool GroundCheck()
     {
         return Physics.Raycast(transformRayStart.position, Vector3.down, rayLength, layerGroundCheck);
     }
 
-
-    //basically if you see the ground as a mirror, is the raycast sloped or not?
+    // Basically if you see the ground as a mirror, is the raycast sloped or not?
     bool SlopeCheck()
     {
         RaycastHit hit;
-
         Physics.Raycast(transformRayStart.position, Vector3.down, out hit, rayLength, layerGroundCheck);
 
         if (hit.collider != null)
@@ -143,7 +154,7 @@ public class NewBehaviourScript : MonoBehaviour
         return true;
     }
 
-    //WINNING / Dying
+    // Winning / Dying
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("WinZone"))
@@ -156,7 +167,4 @@ public class NewBehaviourScript : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
     }
-
-
-
 }
