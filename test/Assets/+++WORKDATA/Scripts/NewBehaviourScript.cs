@@ -31,7 +31,7 @@ public class NewBehaviourScript : MonoBehaviour
     private float cameraRoll;
     [SerializeField] private float maxCamPitch = 80f;
 
-    private void Start() // Make sure everything is set right from the start
+    private void Start() 
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; // Rotation freeze
