@@ -847,6 +847,7 @@ MonoBehaviour:
   transformCameraFollow: {fileID: 724235717}
   rotationSensetivity: 0.2
   maxCamPitch: 80
+  cameraTransform: {fileID: 724235717}
 --- !u!136 &266477606
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1913,7 +1914,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13456585, y: 0, z: 0, w: 0.9909047}
+  m_LocalRotation: {x: 0.13248502, y: -0.13239299, z: 0.01785903, w: 0.982141}
   m_LocalPosition: {x: 23.2, y: 5.868881, z: -20.720894}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3229,7 +3230,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 724235717}
   m_Follow: {fileID: 724235717}
   m_Lens:
     FieldOfView: 80
@@ -3258,7 +3259,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895850999}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.267354, y: -0.36081737, z: 0.10877268, w: 0.88684905}
+  m_LocalRotation: {x: 0.13248502, y: -0.13239299, z: 0.01785903, w: 0.982141}
   m_LocalPosition: {x: 23.2, y: 5.868881, z: -20.720894}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-        
+
     //Movement
     float movingSpeed;
 
@@ -60,8 +60,8 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-       //change movement if slope is too high
-        
+        //change movement if slope is too high
+
         if (SlopeCheck())
         {
             rb.velocity = new Vector3(inputVector.x * movingSpeed, rb.velocity.y, inputVector.y * movingSpeed);
@@ -80,11 +80,11 @@ public class NewBehaviourScript : MonoBehaviour
     //sneaking
     void OnSneak(InputValue inputValue)
     {
-      
+
         float isSneak = inputValue.Get<float>();
 
         //if youre not sneaking youre walking normally
-        
+
         if (Mathf.RoundToInt(isSneak) == 1)
         {
             movingSpeed = sneakSpeed;
@@ -104,7 +104,7 @@ public class NewBehaviourScript : MonoBehaviour
     //basically the same as sneak
     void OnSprint(InputValue inputValue)
     {
-        
+
         float isSprint = inputValue.Get<float>();
 
         //round float to nearest int that we can compare it to a whole number
@@ -132,7 +132,7 @@ public class NewBehaviourScript : MonoBehaviour
 
         Physics.Raycast(transformRayStart.position, Vector3.down, out hit, rayLength, layerGroundCheck);
 
-        if(hit.collider != null)
+        if (hit.collider != null)
         {
             float angle = Vector3.Angle(hit.normal, Vector3.up);
             if (angle > maxAngleSlope)
@@ -157,6 +157,6 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
-   
+
 
 }
