@@ -10,6 +10,7 @@ Naming is "Test" Because i had those weird issues in he frist few lessons and ha
 
 Winning / GameOver
 pause ist main menu
+Levels
 
 
 ***Packages***
@@ -26,6 +27,8 @@ enemy Line Of Sight, FOV, Movement - enemyManager & CustomEditor
 UI: Ui Folder scripts 
 
 scenen - Level 1 & Level 2
+       - Levels for Level selection
+       - Main menu, GameOver, Winning
 
 
 
